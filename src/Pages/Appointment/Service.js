@@ -2,7 +2,7 @@ import React from 'react';
 import PrimaryButton from '../Shared/PrimaryButton';
 
 const Service = ({ service, setTreatment }) => {
-    const { name, slots } = service;
+    const { name, slots, price } = service;
     return (
         <div className='w-[425px] mx-auto shadow p-5 rounded-lg'>
             <div className='flex flex-col items-center justify-center space-y-2'>
@@ -13,6 +13,7 @@ const Service = ({ service, setTreatment }) => {
                     }
                 </p>
                 <p className='uppercase font-medium text-sm'>{slots.length} {slots.length > 1 ? 'spaces' : 'space'} available</p>
+                <p className='font-semibold '><small>Price: ${price}</small></p>
                 <div>
                     <label onClick={() => setTreatment(service)} disabled={slots.length === 0} htmlFor="booking-modal" className="btn modal-button btn-primary uppercase text-white font-bold bg-gradient-to-r from-secondary to-primary">Book Appointment</label>
                 </div>

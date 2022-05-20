@@ -6,7 +6,7 @@ import auth from '../../firebase.init';
 
 const BookingModal = ({ date, treatment, setTreatment, refetch }) => {
     const [user, loading, error] = useAuthState(auth);
-    const { _id, name, slots } = treatment;
+    const { _id, name, slots, price } = treatment;
     const formattedDate = format(date, 'PP');
     const handleBooking = event => {
         event.preventDefault();
@@ -17,11 +17,12 @@ const BookingModal = ({ date, treatment, setTreatment, refetch }) => {
             treatment: name,
             date: formattedDate,
             slot,
+            price,
             patient: user.email,
             patientName: user.displayName,
             phone: event.target.phone.value
         }
-        fetch('http://localhost:5000/booking', {
+        fetch('https://enigmatic-beach-24999.herokuapp.com/booking', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -31,10 +32,10 @@ const BookingModal = ({ date, treatment, setTreatment, refetch }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                if(data.success){
+                if (data.success) {
                     toast(`Appointment is set, ${formattedDate} at ${slot}`)
                 }
-                else{
+                else {
                     toast.error(`Already have an appointment on ${data.booking?.date} at ${data.booking?.slot}`)
                 }
                 refetch();
